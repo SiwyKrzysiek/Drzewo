@@ -125,30 +125,49 @@ namespace Drzewo
             }
         }
 
-        public T DFS(Predicate<T> criterium)
+        public T DFS(Predicate<T> criterion, bool lastChild = true)
         {
-            if (criterium(this.Data))
+            if (criterion(default(T)))
+                throw new ArgumentException("Criterion can't find default value for T");
+
+            if (criterion(this.Data))
+            {
                 return this.Data;
+            }
 
-            foreach (var child in this.Children)
-                return child.DFS(criterium);
+            if (lastChild && this.Children.Count == 0)
+                throw new InvalidOperationException("Element not found");
 
-            //throw new Exception("Element not found");
+            for (int i = 0; i < this.Children.Count; i++)
+            {
+                Tree<T> child = this.Children[i];
+
+                T result = child.DFS(criterion, i == this.Children.Count - 1 && lastChild);
+                if (!default(T).Equals(result))
+                    return result;
+            }
+
+            return default(T);
         }
 
-        public void BFS()
+        public T BFS(Predicate<T> criterion)
         {
-            System.Console.WriteLine(this.Data);
+            if (criterion(this.Data))
+                return this.Data;
 
             Queue<Tree<T>> nodesToVisit = new Queue<Tree<T>>(this.Children);
             while (nodesToVisit.Count != 0)
             {
                 Tree<T> currentNode = nodesToVisit.Dequeue();
 
-                System.Console.WriteLine(currentNode.Data);
+                if (criterion(currentNode.Data))
+                    return currentNode.Data;
+
                 foreach (Tree<T> child in currentNode.Children)
                     nodesToVisit.Enqueue(child);
             }
+
+            throw new InvalidOperationException("Element not found");
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Drzewo
 
             //Console.WriteLine(tree.BFSWalk());
 
-            int found = tree.DFS((x) => x == 2);
+            int found = tree.DFS(x => x == 0);
             Console.WriteLine(found);
         }
     }
