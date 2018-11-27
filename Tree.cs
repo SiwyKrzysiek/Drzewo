@@ -90,6 +90,29 @@ namespace Drzewo
             }
         }
 
+        public string BFSWalk()
+        {
+            StringBuilder output = new StringBuilder();
+            BFSWalk(output);
+
+            return output.Remove(output.Length - 2, 2).ToString(); //Pozbycie się ostatniego przecinka i spacji
+        }
+
+        private void BFSWalk(StringBuilder result)
+        {
+            //System.Console.WriteLine(this.Data);
+            result.Append(this.Data.ToString() + ", ");
+
+            Queue<Tree<T>> nodesToVisit = new Queue<Tree<T>>(this.Children);
+            while (nodesToVisit.Count != 0)
+            {
+                Tree<T> currentNode = nodesToVisit.Dequeue();
+
+                result.Append(currentNode.Data.ToString() + ", ");
+                foreach (Tree<T> child in currentNode.Children)
+                    nodesToVisit.Enqueue(child);
+            }
+        }
 
         public void BFS()
         {

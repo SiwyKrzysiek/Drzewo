@@ -35,7 +35,7 @@ namespace Drzewo
             //tree.DFS();
             //tree.BFS();
 
-            Console.WriteLine(tree.DFSWalk());
+            Console.WriteLine(tree.BFSWalk());
         }
     }
 
