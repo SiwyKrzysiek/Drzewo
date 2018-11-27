@@ -35,7 +35,10 @@ namespace Drzewo
             //tree.DFS();
             //tree.BFS();
 
-            Console.WriteLine(tree.BFSWalk());
+            //Console.WriteLine(tree.BFSWalk());
+
+            int found = tree.DFS((x) => x == 2);
+            Console.WriteLine(found);
         }
     }
 

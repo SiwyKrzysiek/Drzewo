@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace Drzewo
 {
@@ -79,6 +80,9 @@ namespace Drzewo
             return output.Remove(output.Length-2, 2).ToString(); //Pozbycie się ostatniego przecinka i spacji
         }
 
+        /// <summary>
+        /// Funkja, która faktycznie przechodzi drzewo
+        /// </summary>
         private void DFSWalk(StringBuilder result)
         {
             result.Append(this.Data.ToString() + ", ");
@@ -90,6 +94,10 @@ namespace Drzewo
             }
         }
 
+        /// <summary>
+        /// Przechodzi drzewo w szerz i zwraca listę odwiedzonych węzłów
+        /// </summary>
+        /// <returns>Odwiedzone węzły</returns>
         public string BFSWalk()
         {
             StringBuilder output = new StringBuilder();
@@ -98,6 +106,9 @@ namespace Drzewo
             return output.Remove(output.Length - 2, 2).ToString(); //Pozbycie się ostatniego przecinka i spacji
         }
 
+        /// <summary>
+        /// Funkja, która faktycznie przechodzi drzewo
+        /// </summary>
         private void BFSWalk(StringBuilder result)
         {
             //System.Console.WriteLine(this.Data);
@@ -112,6 +123,17 @@ namespace Drzewo
                 foreach (Tree<T> child in currentNode.Children)
                     nodesToVisit.Enqueue(child);
             }
+        }
+
+        public T DFS(Predicate<T> criterium)
+        {
+            if (criterium(this.Data))
+                return this.Data;
+
+            foreach (var child in this.Children)
+                return child.DFS(criterium);
+
+            //throw new Exception("Element not found");
         }
 
         public void BFS()
