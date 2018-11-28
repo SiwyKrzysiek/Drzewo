@@ -125,13 +125,17 @@ namespace Drzewo
             }
         }
 
-        public T DFS(Predicate<T> criterion, bool lastChild = true)
+        public T DFS(Predicate<T> criterion)
         {
-            if (criterion(default(T)))
-                throw new ArgumentException("Criterion can't find default value for T");
+            bool flag = false;
+            return DFS(criterion, ref flag);
+        }
 
+        public T DFS(Predicate<T> criterion, ref bool found, bool lastChild = true)
+        {
             if (criterion(this.Data))
             {
+                found = true;
                 return this.Data;
             }
 
@@ -142,8 +146,8 @@ namespace Drzewo
             {
                 Tree<T> child = this.Children[i];
 
-                T result = child.DFS(criterion, i == this.Children.Count - 1 && lastChild);
-                if (!default(T).Equals(result))
+                T result = child.DFS(criterion, ref found, i == this.Children.Count - 1 && lastChild);
+                if (found)
                     return result;
             }
 
