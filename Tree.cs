@@ -179,21 +179,25 @@ namespace Drzewo
             if (criterion(this.Data)) //Sprawdzenie korzenia
                 return this.Data;
 
-            Queue<Tree<T>> nodesToVisit = new Queue<Tree<T>>(this.Children);
-            while (nodesToVisit.Count != 0)
+            Queue<Tree<T>> nodesToVisit = new Queue<Tree<T>>(this.Children); //Dzieci korzenia wstawiane są do kolejki
+            while (nodesToVisit.Count != 0) //Dopuki są węzły do sprawdzenia
             {
-                Tree<T> currentNode = nodesToVisit.Dequeue();
+                Tree<T> currentNode = nodesToVisit.Dequeue(); //Wyjmowany jest pierwszy węzeł z kolejki
 
-                if (criterion(currentNode.Data))
+                if (criterion(currentNode.Data)) //Sprawdzenie czy spełnia on kryterium
                     return currentNode.Data;
 
-                foreach (Tree<T> child in currentNode.Children)
+                foreach (Tree<T> child in currentNode.Children) //Dodanie dzieci aktualnego węzła na koniec kolejki
                     nodesToVisit.Enqueue(child);
             }
 
-            throw new InvalidOperationException("Element not found");
+            throw new InvalidOperationException("Element not found"); //Wszystkie węzły zostały sprawdzone
         }
 
+        /// <summary>
+        /// Zwraca przykładowe drzewo int-ów
+        /// </summary>
+        /// <returns>Przykładowe drzewo</returns>
         public static Tree<int> CreateExampleTree()
         {
             //Budowa przykładowego drzewa ("Drzewo.png")
