@@ -95,7 +95,7 @@ namespace Drzewo
         }
 
         /// <summary>
-        /// Przechodzi drzewo w szerz i zwraca listę odwiedzonych węzłów
+        /// Przechodzi drzewo wszerz i zwraca listę odwiedzonych węzłów
         /// </summary>
         /// <returns>Odwiedzone węzły</returns>
         public string BFSWalk()
@@ -169,7 +169,7 @@ namespace Drzewo
         }
 
         /// <summary>
-        /// Szukanie elementu w szerz drzewa
+        /// Szukanie elementu wszerz drzewa
         /// </summary>
         /// <param name="criterion">Funkcja zwracająca <c>true</c> dla szukanego elementu</param>
         /// <exception cref="InvalidOperationException">Wyjątek zostaje rzucony w sytuacji gdy nie istnieje element spełniający kryterium</exception>

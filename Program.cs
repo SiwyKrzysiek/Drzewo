@@ -18,7 +18,7 @@ namespace Drzewo
             Console.WriteLine("Przejście drzewa w głąb:");
             Console.WriteLine(tree.DFSWalk());
 
-            Console.WriteLine("\nPrzejście drzewa w szerz:");
+            Console.WriteLine("\nPrzejście drzewa wszerz:");
             Console.WriteLine(tree.BFSWalk());
 
             //Wyszukiwanie wskazanego elementu w drzewie
