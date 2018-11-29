@@ -125,38 +125,58 @@ namespace Drzewo
             }
         }
 
+        /// <summary>
+        /// Szukanie elementu w głąb drzewa.
+        /// </summary>
+        /// <param name="criterion">Funkcja zwracająca <c>true</c> dla szukanego elementu</param>
+        /// <exception cref="InvalidOperationException">Wyjątek zostaje rzucony w sytuacji gdy nie istnieje element spełniający kryterium</exception>
+        /// <returns>Szukany element</returns>
         public T DFS(Predicate<T> criterion)
         {
-            bool flag = false;
-            return DFS(criterion, ref flag);
+            bool flag = false; //Przygotowanie flagi dla prawdziwej funkcji
+            return DFS(criterion, ref flag); //Wywołanie prawdziwej funkcji
         }
 
+        /// <summary>
+        /// Rekurencyjna funkcja, która faktycznie szuka w głąb.
+        /// Jest niedostępna by mieć kontrolę nad dodatkowymi parametrami
+        /// </summary>
+        /// <param name="criterion">Funkcja zwracająca <c>true</c> dla szukanego elementu</param>
+        /// <param name="found">Flaga uzywana w rekurencji. Musi zostać zainicjowana zmienną o wartości <c>false</c></param>
+        /// <param name="lastChild">Flaga uzywana w rekurencji. Musi dostać wartośc <c>false</c> w oryginalnym wywołaniu</param>
+        /// <returns>Szukany element</returns>
         private T DFS(Predicate<T> criterion, ref bool found, bool lastChild = true)
         {
-            if (criterion(this.Data))
+            if (criterion(this.Data)) //Jeżeli aktualny element spełnia kryterium
             {
-                found = true;
-                return this.Data;
+                found = true; //Ustawienie falagi by nie wchodzić w kolejne poziomy rekurencji
+                return this.Data; //Przekazanie znalezionego elementu
             }
 
-            if (lastChild && this.Children.Count == 0)
+            if (lastChild && this.Children.Count == 0) //Jeżeli algorytm doszedł do elementu, który jest ostatnim dzieckiem swojego rodzica i nie ma dzieci to oznacza to, że zostało przeszukane całe drzewo
                 throw new InvalidOperationException("Element not found");
 
-            for (int i = 0; i < this.Children.Count; i++)
+            for (int i = 0; i < this.Children.Count; i++) //Dla każdego dziecka
             {
                 Tree<T> child = this.Children[i];
 
-                T result = child.DFS(criterion, ref found, i == this.Children.Count - 1 && lastChild);
-                if (found)
+                T result = child.DFS(criterion, ref found, i == this.Children.Count - 1 && lastChild); //Wywyołujemy rekurencyjnie szukanie
+                if (found) //Jeżeli flaga została ustawiona to nie ma sensu kontynułować szukania
                     return result;
             }
 
-            return default(T);
+            return default(T); //Wartość domyślna jest zwracana, ponieważ funkcja musi coś zrwócić. Nie jest ona używana
         }
 
+        /// <summary>
+        /// Szukanie elementu w szerz drzewa
+        /// </summary>
+        /// <param name="criterion">Funkcja zwracająca <c>true</c> dla szukanego elementu</param>
+        /// <exception cref="InvalidOperationException">Wyjątek zostaje rzucony w sytuacji gdy nie istnieje element spełniający kryterium</exception>
+        /// <returns>Szukany element</returns>
         public T BFS(Predicate<T> criterion)
         {
-            if (criterion(this.Data))
+            if (criterion(this.Data)) //Sprawdzenie korzenia
                 return this.Data;
 
             Queue<Tree<T>> nodesToVisit = new Queue<Tree<T>>(this.Children);
