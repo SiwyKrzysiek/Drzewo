@@ -131,7 +131,7 @@ namespace Drzewo
             return DFS(criterion, ref flag);
         }
 
-        public T DFS(Predicate<T> criterion, ref bool found, bool lastChild = true)
+        private T DFS(Predicate<T> criterion, ref bool found, bool lastChild = true)
         {
             if (criterion(this.Data))
             {
@@ -172,6 +172,30 @@ namespace Drzewo
             }
 
             throw new InvalidOperationException("Element not found");
+        }
+
+        public static Tree<int> CreateExampleTree()
+        {
+            //Budowa przykładowego drzewa ("Drzewo.png")
+
+            //Pierwszy poziom
+            Tree<int> tree = new Tree<int>(7);
+
+            //Drugi poziom
+            tree.AddManyChildren(new int[] { 8, 3, 5 });
+
+            //Trzeci poziom
+            tree[0].AddManyChildren(new int[] { 14, 2 });
+            tree[1].AddOneChild(1);
+            tree[2].AddManyChildren(new int[] { -8, 30 });
+
+            //Czwarty poziom
+            tree[0][0].AddManyChildren(new int[] { 0, 1, 0 });
+            tree[1][0].AddManyChildren(new int[] { 3, 4, 2 });
+            tree[2][0].AddOneChild(13);
+            tree[2][1].AddManyChildren(new int[] { -10, 42 });
+
+            return tree;
         }
     }
 }
