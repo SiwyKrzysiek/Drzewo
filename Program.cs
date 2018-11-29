@@ -2,7 +2,7 @@
 //Zadanie: Napisać strukturę drzewa z dowolną liczbą dzieci w każdym węźle
 //Autor: Krzysztof Dąbrwoski
 
-//Szkic struktury przykładowego drzewa jest w pliku "Drzewo w programie.jpg"
+//Szkic struktury przykładowego drzewa jest w pliku "Drzewo.png"
 
 using System;
 
@@ -12,35 +12,18 @@ namespace Drzewo
     {
         public static void Main(string[] args)
         {
-            //Budowa przykładowego drzewa ("Drzewo w programie.jpg")
-            //Pierwszy poziom
-            Tree<int> tree = new Tree<int>(7);
+            Tree<int> tree = Tree<int>.CreateExampleTree();
 
-            //Drugi poziom
-            tree.AddManyChildren(new int[]{ 8, 3, 5 });
+            //Przechodzenie przykładowego drzewa
+            Console.WriteLine("Przejście drzewa w głąb:");
+            Console.WriteLine(tree.DFSWalk());
 
-            //Trzeci poziom
-            tree[0].AddManyChildren(new int[] { 14, 2 });
-            tree[1].AddOneChild(1);
-            tree[2].AddManyChildren(new int[] { -8, 30 });
+            Console.WriteLine("\nPrzejście drzewa w szerz:");
+            Console.WriteLine(tree.BFSWalk());
 
-            //Czwarty poziom
-            tree[0][0].AddManyChildren(new int[] { 0, 1, 0 });
-            tree[1][0].AddManyChildren(new int[] { 3, 4, 2 });
-            tree[2][0].AddOneChild(13);
-            tree[2][1].AddManyChildren(new int[] { -10, 42 });
-
-            //Console.WriteLine(tree.GetChildrenAsText());
-
-            //tree.DFS();
-            //tree.BFS();
-
-            //Console.WriteLine(tree.BFSWalk());
-
+            //Wyszukiwanie wskazanego elementu w drzewie
             int found = tree.DFS(x => x == 1);
-            Console.WriteLine(found);
+            //Console.WriteLine("\n" + found);
         }
     }
-
-
 }
